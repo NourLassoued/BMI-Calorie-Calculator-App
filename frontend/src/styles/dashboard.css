@@ -1,0 +1,112 @@
+.dashboard-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  background-color: #1f2937;
+  color: white;
+  padding: 2rem 1rem;
+  overflow-y: auto;
+}
+
+.menu-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2563eb;
+  margin-bottom: 2rem;
+}
+
+.dashboard-menu ul {
+  list-style: none;
+  padding: 0;
+}
+
+.dashboard-menu li {
+  margin: 0;
+}
+
+.dashboard-menu a {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: white;
+  text-decoration: none;
+}
+
+.dashboard-menu a:hover {
+  background: #2563eb;
+  color: white;
+}
+
+
+.menu-section {
+    font-weight: 600;
+    color: #6b7280;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1rem 1.5rem 0.5rem;
+    margin-top: 1rem;
+}
+
+.menu-section:first-of-type {
+    margin-top: 0;
+}
+
+/* Active link state - NavLink ajoute automatiquement la classe 'active' */
+.dashboard-menu a.active {
+    background: #eff6ff;
+    color: #2563eb;
+    border-left: 4px solid #2563eb;
+    padding-left: calc(1.5rem - 4px);
+    font-weight: 600;
+}
+
+/* Scrollbar styling */
+.dashboard-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dashboard-menu::-webkit-scrollbar-track {
+    background: #f5f5f5;
+}
+
+.dashboard-menu::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 3px;
+}
+
+.dashboard-menu::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+@media (max-width: 768px) {
+    .dashboard-menu {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 1rem 0;
+    }
+
+    .menu-title {
+        padding: 0 1rem;
+        margin-bottom: 1rem;
+        font-size: 1.25rem;
+    }
+
+    .dashboard-menu a {
+        padding: 0.5rem 1rem;
+    }
+
+    .dashboard-menu a:hover,
+    .dashboard-menu a.active {
+        padding-left: calc(1rem - 4px);
+    }
+
+    .menu-section {
+        padding: 0.75rem 1rem 0.25rem;
+    }
+}

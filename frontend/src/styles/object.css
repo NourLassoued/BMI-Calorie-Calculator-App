@@ -1,0 +1,135 @@
+/* PAGE GLOBALE */
+.objectif-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+.objectif-container h2 {
+  text-align: center;
+  font-size: 26px;
+  margin-bottom: 25px;
+  color: #1f2937;
+}
+
+/* FORMULAIRE */
+.objectif-form {
+  background: #f3f4f6;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.objectif-form h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #374151;
+}
+
+.objectif-form label {
+  font-weight: 600;
+  margin-top: 10px;
+  display: block;
+  color: #374151;
+}
+
+.objectif-form input,
+.objectif-form select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  transition: border 0.2s;
+}
+
+.objectif-form input:focus,
+.objectif-form select:focus {
+  border-color: #3b82f6;
+  outline: none;
+}
+
+/* BOUTONS */
+.btn {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: #3b82f6;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  background: #2563eb;
+}
+
+.btn-secondary {
+  padding: 10px 16px;
+  background: #6b7280;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-secondary:hover {
+  background: #4b5563;
+}
+
+/* LISTE DES OBJECTIFS */
+.objectif-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.objectif-card {
+  background: white;
+  padding: 18px;
+  border-radius: 12px;
+  border-left: 6px solid #3b82f6;
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s;
+}
+
+.objectif-card:hover {
+  transform: translateY(-3px);
+}
+
+.objectif-card p {
+  margin: 6px 0;
+  font-size: 15px;
+  color: #374151;
+}
+
+.objectif-card strong {
+  color: #111827;
+  font-weight: 600;
+}
+
+.objectif-card button {
+  margin-top: 10px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .objectif-card {
+    padding: 15px;
+  }
+
+  .objectif-form {
+    padding: 15px;
+  }
+
+  .btn, .btn-secondary {
+    width: 100%;
+  }
+}
