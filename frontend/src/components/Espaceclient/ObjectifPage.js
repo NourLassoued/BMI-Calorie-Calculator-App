@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+"use client";
+
+import { useState, useEffect } from "react";
 import DashboardMenu from "./DashboardMenu";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -40,7 +42,7 @@ export default function ObjectifsPage() {
   const handleInputChange = (e) => {
     const value =
       e.target.type === "number" || e.target.type === "range"
-        ? parseFloat(e.target.value)
+        ? Number.parseFloat(e.target.value)
         : e.target.value;
 
     setFormData({
@@ -58,7 +60,6 @@ export default function ObjectifsPage() {
 
       const decoded = JSON.parse(atob(token.split(".")[1]));
       const userId = decoded.id;
-
 
       const response = await fetch(
         "http://localhost:5000/objectifs/addObjectif",
@@ -85,7 +86,7 @@ export default function ObjectifsPage() {
           rythemeKgparSemaine: 0.5,
           typeObjectif: "perte",
         });
-      toast.success("🎯 Objectif ajouté avec succès");
+        toast.success("Objectif ajouté avec succès");
       } else {
         const error = await response.json();
         alert(error.message || "Erreur lors de la création de l'objectif");
@@ -97,8 +98,6 @@ export default function ObjectifsPage() {
   };
 
   const handleDelete = async (id) => {
-  
-
     try {
       const token = localStorage.getItem("authToken");
       if (!token) throw new Error("Utilisateur non connecté");
@@ -128,19 +127,56 @@ export default function ObjectifsPage() {
       setObjectifs((prev) =>
         prev.map((o) => (o._id === id ? updatedObjectif : o))
       );
-      toast.success(" Objectif atteint !");
+      toast.success("Objectif atteint !");
     } catch (error) {
       console.error("Erreur mise à jour objectif:", error);
       toast.error("Erreur mise à jour statut");
     }
   };
 
-  const calculateDaysRemaining = (dateFinCible) => {
+  const calculateDaysRemaining = (dateDebut, dateFin) => {
     const today = new Date();
-    const endDate = new Date(dateFinCible);
-    const diffTime = endDate - today;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
+    const startDate = new Date(dateDebut);
+    const endDate = new Date(dateFin);
+
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    const totalDays =
+      Math.round((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+
+    if (today < startDate) return totalDays;
+
+    const daysPassed =
+      Math.round((today - startDate) / (1000 * 60 * 60 * 24)) + 1;
+
+    const daysLeft = totalDays - daysPassed;
+    return daysLeft > 0 ? daysLeft : 0;
+  };
+
+  const calculateProgression = (dateDebut, dateFin) => {
+    const today = new Date();
+    const startDate = new Date(dateDebut);
+    const endDate = new Date(dateFin);
+
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    const totalDays =
+      Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+
+    const daysPassed =
+      today < startDate
+        ? 0
+        : Math.min(
+            Math.ceil((today - startDate) / (1000 * 60 * 60 * 24)) + 1,
+            totalDays
+          );
+
+    const progression = (daysPassed / totalDays) * 100;
+    return progression > 100 ? 100 : Math.round(progression);
   };
 
   const getObjectifIcon = (type) => {
@@ -199,7 +235,6 @@ export default function ObjectifsPage() {
       <ToastContainer position="top-right" autoClose={3000} />
 
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-        {/* En-tête */}
         <div
           style={{
             display: "flex",
@@ -219,7 +254,7 @@ export default function ObjectifsPage() {
                 marginBottom: "0.5rem",
               }}
             >
-              🎯 Mes Objectifs
+              Mes Objectifs
             </h1>
             <p style={{ color: "#6b7280", fontSize: "1.1rem" }}>
               Suivez vos objectifs de fitness et mesurez votre progression
@@ -252,12 +287,11 @@ export default function ObjectifsPage() {
                 "0 4px 12px rgba(37, 99, 235, 0.3)";
             }}
           >
-            <span>➕</span>
+            <span>+</span>
             <span>Nouvel Objectif</span>
           </button>
         </div>
 
-        {/* Statistiques rapides */}
         <div
           style={{
             display: "grid",
@@ -289,7 +323,6 @@ export default function ObjectifsPage() {
           />
         </div>
 
-        {/* Liste des objectifs */}
         <div
           style={{
             display: "grid",
@@ -305,6 +338,7 @@ export default function ObjectifsPage() {
               getStatutColor={getStatutColor}
               getStatutLabel={getStatutLabel}
               calculateDaysRemaining={calculateDaysRemaining}
+              calculateProgression={calculateProgression}
               onDelete={handleDelete}
               onSetAttente={handleSetAttente}
             />
@@ -352,7 +386,6 @@ export default function ObjectifsPage() {
         )}
       </div>
 
-      {/* Modal */}
       {showModal && (
         <div
           onClick={() => setShowModal(false)}
@@ -392,7 +425,7 @@ export default function ObjectifsPage() {
               }}
             >
               <h2 style={{ fontSize: "1.5rem", color: "#1f2937" }}>
-                🎯 Nouvel Objectif
+                Nouvel Objectif
               </h2>
               <button
                 onClick={() => setShowModal(false)}
@@ -433,9 +466,9 @@ export default function ObjectifsPage() {
                       fontSize: "1rem",
                     }}
                   >
-                    <option value="perte">🔽 Perte de poids</option>
-                    <option value="gain">🔼 Gain de poids</option>
-                    <option value="maintien">➡️ Maintien du poids</option>
+                    <option value="perte">Perte de poids</option>
+                    <option value="gain">Gain de poids</option>
+                    <option value="maintien">Maintien du poids</option>
                   </select>
                 </div>
 
@@ -609,14 +642,14 @@ export default function ObjectifsPage() {
                         </div>
                         <div style={{ fontSize: "0.9rem", color: "#1e3a8a" }}>
                           <div>
-                            • Différence:{" "}
+                            Différence:{" "}
                             {Math.abs(
                               formData.poidsCible - formData.poidsDepart
                             ).toFixed(1)}{" "}
                             kg
                           </div>
                           <div>
-                            • Durée:{" "}
+                            Durée:{" "}
                             {Math.ceil(
                               Math.abs(
                                 formData.poidsCible - formData.poidsDepart
@@ -625,7 +658,7 @@ export default function ObjectifsPage() {
                             semaines
                           </div>
                           <div>
-                            • Date d'arrivée estimée:{" "}
+                            Date d'arrivée estimée:{" "}
                             {new Date(
                               Date.now() +
                                 Math.ceil(
@@ -749,9 +782,15 @@ function ObjectifCard({
   getStatutColor,
   getStatutLabel,
   calculateDaysRemaining,
+  calculateProgression,
   onDelete,
   onSetAttente,
 }) {
+  const progressionPercentage = calculateProgression(
+    objectif.dateDebut,
+    objectif.dateFinCible
+  );
+
   return (
     <div
       style={{
@@ -922,7 +961,9 @@ function ObjectifCard({
                 }}
               >
                 <span>Progression</span>
-                <span style={{ fontWeight: "600", color: "#2563eb" }}>0%</span>
+                <span style={{ fontWeight: "600", color: "#2563eb" }}>
+                  {progressionPercentage}%
+                </span>
               </div>
               <div
                 style={{
@@ -936,9 +977,9 @@ function ObjectifCard({
                 <div
                   style={{
                     height: "100%",
-                    width: "0%",
+                    width: `${progressionPercentage}%`,
                     background:
-                      "linear-gradient(90deg, #2563eb 0%, #7c3aed 100%)",
+                      "linear-gradient(90deg, #2563eb 0%, #1d4ed8 100%)",
                     borderRadius: "10px",
                     transition: "width 1s ease",
                   }}
@@ -960,11 +1001,11 @@ function ObjectifCard({
             >
               <span style={{ fontSize: "1.2rem" }}>⏰</span>
               <span>
-                {calculateDaysRemaining(objectif.dateFinCible) > 0
-                  ? `${calculateDaysRemaining(
-                      objectif.dateFinCible
-                    )} jours restants`
-                  : "Échéance dépassée"}
+                {calculateDaysRemaining(
+                  objectif.dateDebut,
+                  objectif.dateFinCible
+                )}{" "}
+                jours restants
               </span>
             </div>
           </>
@@ -980,7 +1021,6 @@ function ObjectifCard({
           borderTop: "1px solid #e5e7eb",
         }}
       >
-        {/* On affiche les boutons uniquement si l'objectif n'est pas atteint */}
         {objectif.statut !== "atteint" && (
           <>
             <button
@@ -995,7 +1035,7 @@ function ObjectifCard({
                 cursor: "pointer",
               }}
             >
-              📝 Modifier
+              Modifier
             </button>
             <button
               onClick={() => onSetAttente(objectif._id)}
@@ -1010,11 +1050,10 @@ function ObjectifCard({
                 cursor: "pointer",
               }}
             >
-              ✅ Atteint
+              ✅ Atteint{" "}
             </button>
           </>
         )}
-        {/* Le bouton Supprimer reste toujours visible */}
         <button
           onClick={() => onDelete(objectif._id)}
           style={{

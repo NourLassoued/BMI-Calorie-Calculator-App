@@ -17,7 +17,6 @@ export const updateUser = (id, data) =>
     headers: { Authorization: `Bearer ${getToken()}` },
   });
 
-// Ajouter un utilisateur avec image
 export const addUserWithImage = (data, file) => {
   const formData = new FormData();
   formData.append("image_user", file);
@@ -31,15 +30,27 @@ export const addUserWithImage = (data, file) => {
   });
 };
 
-// Récupérer un utilisateur par ID
 export const getUserById = async (id) => {
   try {
     const res = await axios.get(`${API_URL}/getUserById/${id}`, {
       headers: { Authorization: `Bearer ${getToken()}` },
     });
-    return res.data; // <- ici tu récupères directement l'utilisateur
+    return res.data;
   } catch (err) {
     console.error("Erreur getUserById:", err.response?.data || err.message);
     throw err;
   }
+
 };
+export const calculateCaloriesByActivity = async (id) => {
+  try {
+    const res = await axios.get(`${API_URL}/calculate/${id}`, {
+      headers: { Authorization: `Bearer ${getToken()}` },
+    });
+    return res.data;
+  } catch (err) {
+    console.error("Erreur calculateCaloriesByActivity:", err.response?.data || err.message);
+    throw err;
+  }
+};
+

@@ -8,6 +8,7 @@ import Button from "./components/common/Button";
 import ProductCard from "./components/Espaceclient/ProductCard";
 import DashboardMenu from "./components/Espaceclient/DashboardMenu";
 import PoidsPage from "./components/Espaceclient/PoidsPage";
+import MesureMasseGrasse from "./components/Espaceclient/MesureMasseGrasse";
 
 import './styles/Login.css';
 import Inscriptionn from "./components/auth/Inscriptionn";
@@ -16,6 +17,7 @@ import App from "./App";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DashboardHome from "./components/Espaceclient/DashboardHome";
 import ObjectifPage from "./components/Espaceclient/ObjectifPage";
+import CaloriesIMC from "./components/Espaceclient/CaloriesIMC";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
@@ -32,6 +34,8 @@ root.render(
         <Route path="/home" element={<DashboardHome />} />
         <Route path="/objectifs" element={<ObjectifPage />} />
         <Route path="/poids" element={<PoidsPage />} />
+              <Route path="/CaloriesIMC" element={<CaloriesIMC />} />
+              <Route path="/mesures" element={<MesureMasseGrasse />} />
         <Route path="/*" element={<App />} />
       </Routes>
     </BrowserRouter>
