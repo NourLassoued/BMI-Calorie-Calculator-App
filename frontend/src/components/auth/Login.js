@@ -17,19 +17,17 @@ export default function Login() {
     setLoading(true);
 
     try {
-      // 🔐 LOGIN API
       const res = await login({ email, motDePasse });
 
       console.log("Connecté :", res.user);
 
-      // ✅ STOCKAGE TOKEN + USER ID
       localStorage.setItem("authToken", res.token);
-      localStorage.setItem("userId", res.user._id);
 
-      setLoading(false);
-
-      // 🚀 REDIRECTION
-      navigate("/home");
+      if (res.user.role === "admin") {
+        navigate("/CoachDashboard");
+      } else {
+        navigate("/home");
+      }
     } catch (err) {
       setError(err.response?.data?.message || "Erreur de connexion");
       setLoading(false);
@@ -40,8 +38,8 @@ export default function Login() {
     <div className="login-page">
       <div className="auth-card">
         <div className="auth-header">
-         <h1>🏋️ FitTracker</h1>
-      <p>Suivez votre poids, vos macros et votre progression, et calculez votre BMR</p>
+          <h1>🏋️ FitTracker</h1>
+          
         </div>
 
         <div className="auth-body">
@@ -76,13 +74,18 @@ export default function Login() {
               />
             </div>
 
-            <button type="submit" className="btn btn-primary" disabled={loading}>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={loading}
+            >
               {loading ? "Connexion..." : "Se connecter"}
             </button>
           </form>
 
           <div className="auth-footer">
-            Pas encore de compte ? <Link to="/Inscriptionn">Inscrivez-vous</Link>
+            Pas encore de compte ?{" "}
+            <Link to="/Inscription">Inscrivez-vous</Link>
           </div>
         </div>
       </div>

@@ -2,15 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import Header from "./components/common/Header";
-import Footer from "./components/common/Footer";
-import Button from "./components/common/Button";
-import ProductCard from "./components/Espaceclient/ProductCard";
+import Header from "./components/Front/Header";
+import Footer from "./components/Front/Footer";
+import Button from "./components/Front/Button";
 import DashboardMenu from "./components/Espaceclient/DashboardMenu";
+import NutritionPlan from "./components/Espaceclient/NutritionPlan";
+import CoachDashboard from "./components/Espacecoach/CoachDashboard";
 import PoidsPage from "./components/Espaceclient/PoidsPage";
 import MesureMasseGrasse from "./components/Espaceclient/MesureMasseGrasse";
-
-import './styles/Login.css';
+import CoachCalendar from "./components/Espacecoach/CoachCalendar"
+import CoachMenu from "./components/Espacecoach/CoachMenu";
+import "./styles/Login.css";
 import Inscriptionn from "./components/auth/Inscriptionn";
 import Login from "./components/auth/Login";
 import App from "./App";
@@ -27,15 +29,21 @@ root.render(
         <Route path="/header" element={<Header />} />
         <Route path="/footer" element={<Footer />} />
         <Route path="/Button" element={<Button />} />
-        <Route path="/ProductCard" element={<ProductCard />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/Inscriptionn" element={<Inscriptionn />} />
+        <Route path="/Inscription" element={<Inscriptionn />} />
         <Route path="/dashboard-menu" element={<DashboardMenu />} />
         <Route path="/home" element={<DashboardHome />} />
         <Route path="/objectifs" element={<ObjectifPage />} />
         <Route path="/poids" element={<PoidsPage />} />
-              <Route path="/CaloriesIMC" element={<CaloriesIMC />} />
-              <Route path="/mesures" element={<MesureMasseGrasse />} />
+        <Route path="/CaloriesIMC" element={<CaloriesIMC />} />
+        <Route path="/mesures" element={<MesureMasseGrasse />} />
+        <Route path="/nutritionplan" element={<NutritionPlan />} />
+        <Route path="/calendrier" element={<CoachCalendar/>}/>
+         <Route path="/CoachMenu" element={<CoachMenu/>}/>
+
+        
+         <Route path="/CoachDashboard" element={<CoachDashboard/>}/>
+
         <Route path="/*" element={<App />} />
       </Routes>
     </BrowserRouter>

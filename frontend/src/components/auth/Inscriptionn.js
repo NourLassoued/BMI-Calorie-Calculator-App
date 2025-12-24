@@ -13,7 +13,7 @@ export default function Inscriptionn() {
     email: "",
     motDePasse: "",
     dateNaissance: "",
-    sexe: "", // homme, femme, autre
+    sexe: "", 
   });
 
   const [errors, setErrors] = useState({});
@@ -44,7 +44,7 @@ export default function Inscriptionn() {
     setLoading(true);
 
     try {
-      const response = await register(formData); // appel API
+      const response = await register(formData); 
       setSuccess("Compte créé avec succès !");
       setLoading(false);
 
@@ -63,7 +63,7 @@ export default function Inscriptionn() {
     <div className="register-page">
       <div className="auth-card">
         <div className="auth-header">
-          <h1>🛍️ ShopX</h1>
+          <h1>🏋️ FitTracker</h1>
           <p>Créer un compte</p>
         </div>
 
