@@ -20,11 +20,13 @@ var usersRouter = require('./routes/users');
 var authRouter = require('./routes/authRouter');
 var objectRouter = require('./routes/object');
 var poidsRouter = require('./routes/poids');
+var mesureRouter = require('./routes/meseur');
+var  imcRouter=require('./routes/imcRouter');
 
-// 🌟 Création de l'application Express
+//  Création de l'application Express
 var app = express();
 
-// 🚫 Désactiver le cache (fix 304 / Axios)
+//  Désactiver le cache (fix 304 / Axios)
 app.use((req, res, next) => {
   res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
   res.setHeader("Pragma", "no-cache");
@@ -41,17 +43,17 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
-// 🌟 OPTIONS preflight
+//  OPTIONS preflight
 app.options("*", cors({
   origin: "http://localhost:3000",
   credentials: true
 }));
 
-// 🌟 View engine setup
+// View engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// 🌟 Middlewares généraux
+// Middlewares généraux
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -71,14 +73,16 @@ app.use(session({
   }
 }));
 
-// 🌟 Routes
+//  Routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/objectifs', objectRouter);
 app.use('/poids', poidsRouter);
+app.use('/mesures', mesureRouter);
+app.use('/imc',imcRouter);
 
-// 🌟 Catch 404
+// Catch 404
 app.use(function(req, res, next) {
   next(createError(404));
 });

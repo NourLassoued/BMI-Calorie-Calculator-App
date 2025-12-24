@@ -11,7 +11,8 @@ router.get('/getAllUsers', requireAuthUser ,userController.getAllUsers);
 router.post('/addUser', userController.addUser);
 router.delete('/deleteUser/:id', requireAuthUser ,userController.deleteUser);
 router.put('/updateUser/:id' ,uploadfile.single('image_user'),userController.updateUser);
-router.post('/addUserWithImage', uploadfile.single('image_user'), userController.addUserWithImage);
 router.get('/getUserById/:id' ,userController.getUserById);
+router.post('/calculate/:id', userController.calculateCaloriesByActivity);
+
 module.exports = router;
 

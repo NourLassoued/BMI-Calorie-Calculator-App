@@ -1,9 +1,8 @@
 const Poids = require("../models/poidsSchema");
-const User = require("../models/userschema"); // ⚠️ Importer le modèle User
-const bcrypt = require("bcrypt"); // ⚠️ Importer bcrypt
+const User = require("../models/userschema");
+const bcrypt = require("bcrypt"); 
 const mongoose = require("mongoose");
 
-// Ajouter un poids
 exports.addPoids = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -32,7 +31,7 @@ exports.addPoids = async (req, res) => {
   }
 };
 
-// Récupérer les poids d'un utilisateur
+
 exports.getPoidsByUser = async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -46,7 +45,6 @@ exports.getPoidsByUser = async (req, res) => {
   }
 };
 
-// Mettre à jour un utilisateur
 exports.updateUser = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -64,13 +62,11 @@ exports.updateUser = async (req, res) => {
       image_user,
     } = req.body;
 
-    // Chercher l'utilisateur
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "Utilisateur non trouvé" });
     }
 
-    // Mettre à jour les champs s'ils sont fournis
     if (nom) user.nom = nom;
     if (prenom) user.prenom = prenom;
     if (email) user.email = email;
